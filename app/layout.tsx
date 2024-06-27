@@ -5,6 +5,8 @@ import { ClerkProvider } from "@clerk/nextjs"
 import { QueryProvider } from "@/providers/query-provider"
 
 import "./globals.css"
+import { Toaster } from "@/components/ui/sonner"
+import { SheetProvider } from "@/providers/sheet-provider"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -22,7 +24,11 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
-          <QueryProvider>{children}</QueryProvider>
+          <QueryProvider>
+            <SheetProvider />
+            <Toaster />
+            {children}
+          </QueryProvider>
         </body>
       </html>
     </ClerkProvider>
