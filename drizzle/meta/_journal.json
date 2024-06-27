@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1719482643754,
+      "tag": "0000_melodic_siren",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1719483330345,
+      "tag": "0001_soft_toro",
+      "breakpoints": true
+    }
+  ]
+}
