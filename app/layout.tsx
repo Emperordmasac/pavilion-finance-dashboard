@@ -1,20 +1,16 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import "./globals.css"
 
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton
-} from "@clerk/nextjs"
+import { ClerkProvider } from "@clerk/nextjs"
+import { QueryProvider } from "@/providers/query-provider"
+
+import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Pavilion Finance",
-  description: "Dashboard web application for the pavilion group"
+  description: "Dashboard Finance web application for the pavilion group"
 }
 
 export default function RootLayout({
@@ -25,7 +21,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <QueryProvider>{children}</QueryProvider>
+        </body>
       </html>
     </ClerkProvider>
   )
