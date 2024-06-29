@@ -3,6 +3,7 @@
 import * as React from "react"
 import {
   ColumnDef,
+  Row,
   ColumnFiltersState,
   SortingState,
   flexRender,
@@ -23,22 +24,28 @@ import {
 } from "@/components/ui/table"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { Trash } from "lucide-react"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   filterKey: string
+  onDelete: (rows: Row<TData>[]) => void
+  disabled?: boolean
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  filterKey
+  filterKey,
+  disabled,
+  onDelete
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
+  const [rowSelection, setRowSelection] = React.useState({})
 
   const table = useReactTable({
     data,
@@ -49,9 +56,11 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onRowSelectionChange: setRowSelection,
     state: {
       sorting,
-      columnFilters
+      columnFilters,
+      rowSelection
     }
   })
 
@@ -66,6 +75,17 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
+        {table.getFilteredSelectedRowModel().rows.length > 0 && (
+          <Button
+            size="sm"
+            disabled={disabled}
+            variant="outline"
+            className=" ml-auto font-normal text-xs"
+          >
+            <Trash className=" size-4 mr-2" />
+            Delete ({table.getFilteredSelectedRowModel().rows.length})
+          </Button>
+        )}
       </div>
       <div className="rounded-md border">
         <Table>
@@ -118,6 +138,10 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
+        <div className="flex-1 text-sm text-muted-foreground">
+          {table.getFilteredSelectedRowModel().rows.length} of{" "}
+          {table.getFilteredRowModel().rows.length} row(s) selected.
+        </div>
         <Button
           variant="outline"
           size="sm"

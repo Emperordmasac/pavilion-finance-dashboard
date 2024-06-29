@@ -39,7 +39,13 @@ export default function AccountPage() {
           </Button>
         </CardHeader>
         <CardContent>
-          <DataTable filterKey="email" columns={columns} data={data} />
+          <DataTable
+            onDelete={() => {}}
+            filterKey="email"
+            columns={columns}
+            data={data}
+            disabled={false} // -- to be changed later
+          />
         </CardContent>
       </Card>
     </div>
